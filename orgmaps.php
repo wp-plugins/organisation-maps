@@ -2,7 +2,7 @@
 /*
 Plugin Name: Organisation Maps
 Description: This plugin provides a mapping capability bulit on the Google Maps API. It allows the user to create a map of his organisation's campus on a page and mark out notable places on the map. Additional features include marker categorisation and filtering, info window editing etc.
-Version: 0.2
+Version: 0.2.1
 Author: Lim Jiunn Haur
 Author URI: http://broken-watch.info/
 */
@@ -254,9 +254,9 @@ function orgmaps_admin_panel_setup (){
 		<form id='orgmaps_delete_cat_form' action="<?php echo get_settings('siteurl') ?>/wp-content/plugins/orgmaps/orgmaps-func.php" onsubmit="javascript: return false;">
 			<div style="clear:right">
 			<h3>Categories</h3>
-			<table cellspacing="1" cellpadding="2" border="1">
+			<table cellspacing="1" cellpadding="2">
 			<thead>
-				<tr>
+				<tr style="padding:5px">
 					<th>&nbsp;</th>
 					<th>Name</th>
 					<th>Icon URL</th>
@@ -285,18 +285,24 @@ function orgmaps_admin_panel_setup (){
 				
 			?>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td align="right"><input type="submit" value="Delete »" onclick="javascript: Orgmaps.deleteCats(); return false;"/></td>
+				</tr>
+			</tfoot>
 			</table>
 			<p><small>Warning: deleting a category <strong>removes all markers</strong> in that category.</small></p>
 			</div>
-			
-			<p class="submit">
-				<input type="submit" value="Delete »" onclick="javascript: Orgmaps.deleteCats(); return false;"/>
-			</p>
 		
 		</form>
 		<form id='orgmaps_cat_form' action="<?php echo get_settings('siteurl') ?>/wp-content/plugins/orgmaps/orgmaps-func.php" onsubmit="javascript: return false;">	
-			<h4>New category</h4>
-			<table cellspacing="5" cellpadding="2">
+			<span id='orgmaps_new_cat'><h4>New category</h4></span>&nbsp;|&nbsp;<span id='orgmaps_edit_cat'><h4>Edit category</h4></span>
+			<table id='orgmaps_new_cat_tbl' cellspacing="5" cellpadding="2">
 				<tr valign="top">
 					<th scope="row" align="right">Name:</th>
 					<td><input type="text" name="name" /></td>
@@ -310,8 +316,40 @@ function orgmaps_admin_panel_setup (){
 					<td><input type="text" name="shadow" size="70" /></td>
 				</tr>
 				<tr>
-				<th></th>
-				<td align="right"><input type="submit" value="Create »" onclick="javascript: Orgmaps.addCat(); return false;" />
+					<th></th>
+					<td align="right"><input type="submit" value="Create »" onclick="javascript: Orgmaps.addCat(); return false;" /></td>
+				</tr>
+			</table>
+			<table id="orgmaps_edit_cat_tbl" cellspacing="5" cellpadding="2">
+				<tr valign="top">
+					<th scope="row" align="right">Category:</th>
+					<td>
+						<select name='edit_id'>
+							<?php
+								foreach ($cats as $cat){
+							?>
+							<option value='<?php echo $cat->id ?>'><?php echo $cat->name ?></option>	
+							<?php
+								}
+							?>					
+						</select>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row" align="right">Name:</th>
+					<td><input type="text" name="edit_name" size="70" /></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row" align="right">Icon:</th>
+					<td><input type="text" name="edit_icon" size="70" /></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row" align="right">Shadow:</th>
+					<td><input type="text" name="edit_shadow" size="70" /></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td align="right"><input type="submit" value="Update »" onclick="javascript: Orgmaps.updateCat(); return false;" /></td>
 				</tr>
 			</table>
 		</form>

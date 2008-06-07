@@ -56,6 +56,25 @@ function orgmaps_add_cat (){
 
 }
 
+/**
+ * Update current category
+ * update row in DB
+ */
+function orgmaps_update_cat (){
+
+	// DB interface
+	global $wpdb;
+	
+	$icon = $_POST['edit_icon'] == '' ? ORGMAPS_DEF_ICON : $_POST['edit_icon'];
+	$shadow = $_POST['edit_shadow'] == '' ? ORGMAPS_DEF_SHADOW : $_POST['edit_shadow'];
+	
+	// update name, icon, shadow
+	$wpdb->query ("UPDATE " . $wpdb->prefix . "marker_cats SET name='" . attribute_escape($_POST['edit_name']) . "', icon='" . attribute_escape($icon) . "', shadow='" . attribute_escape($shadow) . "' WHERE id=" . $_POST['edit_id'] . ";");
+	
+	echo "Category updated";
+
+}
+
 /*
  * Delete categories
  * Remove corresponding rows from DB

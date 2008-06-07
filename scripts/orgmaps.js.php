@@ -296,7 +296,55 @@ var Orgmaps = {
 	 * Initialize map on options page
 	 */
 	adminInit: function (){
+	
 		this.isAdmin = true;
+		
+		Event.observe ($('orgmaps_edit_cat'), 'click', this.toggleCatForm.bindAsEventListener (this));
+		Event.observe ($('orgmaps_new_cat'), 'click', this.toggleCatForm.bindAsEventListener (this));		
+		Event.observe ($('orgmaps_cat_form')['edit_id'], 'change', this.updateCatForm.bindAsEventListener (this));
+		
+		$('orgmaps_edit_cat').setStyle ({color: '#666'});
+		$('orgmaps_edit_cat_tbl').hide();
+		this.updateCatForm();
+		
+	},
+	
+	/*
+	 * Update fields in edit category form
+	 */
+	updateCatForm: function (){
+	
+		var edit_cat = $('orgmaps_cat_form');
+		var id = $F(edit_cat['edit_id']);
+		
+		var cat = this.cats.find (function (cat){
+			return cat.id == id;
+		});
+		
+		edit_cat['edit_name'].value = cat.name;
+		edit_cat['edit_icon'].value = cat.icon;
+		edit_cat['edit_shadow'].value = cat.shadow;
+	
+	},
+	
+	/*
+	 * Toggle category form
+	 */
+	toggleCatForm: function (){
+	
+		if ($('orgmaps_new_cat_tbl').visible()){
+			// if current form is the 'new category' form
+			$('orgmaps_new_cat').setStyle ({color: '#666'});
+			$('orgmaps_edit_cat').setStyle ({color: 'inherit'});
+		}else {
+			// if current form is the 'edit category' form
+			$('orgmaps_new_cat').setStyle ({color: 'inherit'});
+			$('orgmaps_edit_cat').setStyle ({color: '#666'});
+		}
+		
+		$('orgmaps_new_cat_tbl').toggle();
+		$('orgmaps_edit_cat_tbl').toggle();
+	
 	},
 	
 	/*
@@ -639,7 +687,7 @@ var Orgmaps = {
 	 */
 	_addCat: function (id){
 	
-			// get form inputs
+		// get form inputs
 		var inputs = $('orgmaps_cat_form').serialize(true);
 		
 		// create row
@@ -653,6 +701,41 @@ var Orgmaps = {
 		
 		// add to table
 		$('orgmaps_cat_tbody').appendChild (tr);
+	
+	},
+	
+	/*
+	 * Update category data
+	 */
+	updateCat: function (){
+	
+		$('orgmaps_cat_form').request ({
+			method: 'post',
+			parameters: {action: 'update_cat'},
+			onSuccess: function (transport, json){
+				Orgmaps._updateCat();
+			}
+		});
+		
+	},
+	
+	/*
+	 * Update data on page (NOTE: private method)
+	 */
+	_updateCat: function (){
+	
+		// get form inputs
+		var inputs = $('orgmaps_cat_form').serialize(true);
+		
+		// find row
+		var row = $('orgmaps_cat_' + inputs.edit_id);
+		var cells = row.immediateDescendants();
+		
+		cells[1].update (inputs.edit_name);
+		cells[2].update (inputs.edit_icon);
+		cells[3].update ("<img src='" + inputs.edit_icon + "' />");
+		cells[4].update (inputs.edit_shadow);
+		cells[5].update ("<img src='" + inputs.edit_shadow + "' />");
 	
 	},
 	
