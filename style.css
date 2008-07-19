@@ -1,0 +1,58 @@
+div#orgmaps_left {
+	display: none;
+}
+
+/*
+ * Sidebar
+ */
+div#orgmaps_sidebar {
+	width: 300px;
+	text-align: left;
+}
+
+div#orgmaps_sidebar img {
+	position: relative;
+	top: 5px;
+	padding-right: 10px;
+}
+
+/*
+ * Directions pane
+ */
+div#orgmaps_drive_div {
+	display: none;
+}
+
+form#orgmaps_drive_form {
+	text-align: left; !important
+}
+
+form#orgmaps_drive_form p {
+	display: inline;
+}
+
+/*
+ * Legend
+ */
+ div#orgmaps_legend img {
+	position: relative;
+	top: 15px;
+	padding-right: 5px;
+	padding-left: 5px;
+ }
+ 
+/*
+ * Category input form (wp-admin)
+ */
+form#orgmaps_cat_form h4 {
+ 	display: inline;
+	cursor: pointer;
+}
+
+table#orgmaps_new_cat_tbl {
+	padding-bottom: 57px;
+}
+
+table#orgmaps_edit_cat_tbl {
+	padding: 10px;
+}
