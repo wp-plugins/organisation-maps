@@ -32,7 +32,7 @@ Additional features include marker filtering and getting driving directions.
 You can:
 
 1. Modify `orgmaps/style.css`, or
-1. Modify the HTML markup in the page entitled ‘Map’.
+1. Modify the HTML markup in the page entitled 'Map'.
 
 = How do I modify the window theme? =
 
