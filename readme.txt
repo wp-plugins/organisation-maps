@@ -3,7 +3,7 @@ Contributors: codex.is.poetry
 Tags: Google, maps, organization, map
 Requires at least: 2.3.1
 Tested up to: 2.3.1
-Stable tag: trunk
+Stable tag: 0.2
 
 This plugin provides a mapping capability built on the Google Maps API.
 
